@@ -24,20 +24,24 @@ def about():
 
 
 from mapping2 import process
-@app.route('/api/process', methods=['POST'])
+@app.route('/api/process',methods=['POST'])
 def routes():
     # Assuming the JSON body contains 'start' and 'finish'
     
     # Extract 'start' and 'finish' from the JSON data
-    start = request.form.get('start')
-    finish = request.form.get('finish')
+    start = request.json.get('start')
+    finish = request.json.get('finish')
 
     # Call the 'process' function with 'start' and 'finish'
-    x, y, z = process(start, finish)
-    print('xxx', x, y, z)
+    shortest_path_length, shortest_path_length_car, shortest_path_length_train, route_path = process(start, finish)
+    # print('xxx', x, y, z)
 
     # Convert the values to JSON format
-    result_json = jsonify({'x': x, 'y': y, 'z': z})
+    result_json = jsonify(
+        {'shortest_path_length': shortest_path_length, 
+         'shortest_path_length_car': shortest_path_length_car, 
+         'shortest_path_length_train': shortest_path_length_train,
+         'route_path': route_path})
 
     return result_json
 

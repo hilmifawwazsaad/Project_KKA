@@ -353,7 +353,7 @@
     </div>
 
     <div class="container form-container">
-      <form action="/menu" method="post">
+      <form onsubmit="process(event)">
         <!-- Dropdown Start City -->
         <div
           class="form-group mb-3"
@@ -368,41 +368,41 @@
             name="startCity"
             required
           >
-            <option value="city1">Wonogiri</option>
-            <option value="city2">Sukoharjo</option>
-            <option value="city3">Karanganyar</option>
-            <option value="city4">Klaten</option>
-            <option value="city5">Boyolali</option>
-            <option value="city6">Surakarta</option>
-            <option value="city7">Sragen</option>
-            <option value="city8">Grobogan</option>
-            <option value="city9">Semarang</option>
-            <option value="city10">Kota Semarang</option>
-            <option value="city11">Demak</option>
-            <option value="city12">Kudus</option>
-            <option value="city13">Pati</option>
-            <option value="city14">Blora</option>
-            <option value="city15">Rembang</option>
-            <option value="city16">Jepara</option>
-            <option value="city17">Magelang</option>
-            <option value="city18">Kota Magelang</option>
-            <option value="city19">Temanggung</option>
-            <option value="city20">Kendal</option>
-            <option value="city21">Kota Salatiga</option>
-            <option value="city22">Purworejo</option>
-            <option value="city23">Wonosobo</option>
-            <option value="city24">Batang</option>
-            <option value="city25">Banjarnegara</option>
-            <option value="city26">Pekalongan</option>
-            <option value="city27">Kota Pekalongan</option>
-            <option value="city28">Kebumen</option>
-            <option value="city29">Cilacap</option>
-            <option value="city30">Banyumas</option>
-            <option value="city31">Purbalingga</option>
-            <option value="city32">Brebes</option>
-            <option value="city33">Tegal</option>
-            <option value="city34">Kota Tegal</option>
-            <option value="city35">Pemalang</option>
+            <option value="wonogiri">Wonogiri</option>
+            <option value="sukoharjo">Sukoharjo</option>
+            <option value="karanganyar">Karanganyar</option>
+            <option value="klaten">Klaten</option>
+            <option value="boyolali">Boyolali</option>
+            <option value="surakarta">Surakarta</option>
+            <option value="sragen">Sragen</option>
+            <option value="grobogan">Grobogan</option>
+            <option value="semarang">Semarang</option>
+            <option value="kota semarang">Kota Semarang</option>
+            <option value="demak">Demak</option>
+            <option value="kudus">Kudus</option>
+            <option value="pati">Pati</option>
+            <option value="blora">Blora</option>
+            <option value="rembang">Rembang</option>
+            <option value="jepara">Jepara</option>
+            <option value="magelang">Magelang</option>
+            <option value="kota magelang">Kota Magelang</option>
+            <option value="temanggung">Temanggung</option>
+            <option value="kendal">Kendal</option>
+            <option value="kota salatiga">Kota Salatiga</option>
+            <option value="purworejo">Purworejo</option>
+            <option value="wonosobo">Wonosobo</option>
+            <option value="batang">Batang</option>
+            <option value="banjarnegara">Banjarnegara</option>
+            <option value="pekalongan">Pekalongan</option>
+            <option value="kota pekalongan">Kota Pekalongan</option>
+            <option value="kebumen">Kebumen</option>
+            <option value="cilacap">Cilacap</option>
+            <option value="banyumas">Banyumas</option>
+            <option value="purbalingga">Purbalingga</option>
+            <option value="brebes">Brebes</option>
+            <option value="tegal">Tegal</option>
+            <option value="kota tegal">Kota Tegal</option>
+            <option value="pemalang">Pemalang</option>
           </select>
         </div>
 
@@ -416,41 +416,41 @@
             name="finishCity"
             required
           >
-            <option value="city1">Wonogiri</option>
-            <option value="city2">Sukoharjo</option>
-            <option value="city3">Karanganyar</option>
-            <option value="city4">Klaten</option>
-            <option value="city5">Boyolali</option>
-            <option value="city6">Surakarta</option>
-            <option value="city7">Sragen</option>
-            <option value="city8">Grobogan</option>
-            <option value="city9">Semarang</option>
-            <option value="city10">Kota Semarang</option>
-            <option value="city11">Demak</option>
-            <option value="city11">Kudus</option>
-            <option value="city12">Pati</option>
-            <option value="city13">Blora</option>
-            <option value="city14">Rembang</option>
-            <option value="city15">Jepara</option>
-            <option value="city16">Magelang</option>
-            <option value="city17">Kota Magelang</option>
-            <option value="city18">Temanggung</option>
-            <option value="city19">Kendal</option>
-            <option value="city20">Kota Salatiga</option>
-            <option value="city21">Purworejo</option>
-            <option value="city22">Wonosobo</option>
-            <option value="city23">Batang</option>
-            <option value="city24">Banjarnegara</option>
-            <option value="city25">Pekalongan</option>
-            <option value="city26">Kota Pekalongan</option>
-            <option value="city27">Kebumen</option>
-            <option value="city28">Cilacap</option>
-            <option value="city20">Banyumas</option>
-            <option value="city31">Purbalingga</option>
-            <option value="city32">Brebes</option>
-            <option value="city33">Tegal</option>
-            <option value="city34">Kota Tegal</option>
-            <option value="city35">Pemalang</option>
+          <option value="wonogiri">Wonogiri</option>
+          <option value="sukoharjo">Sukoharjo</option>
+          <option value="karanganyar">Karanganyar</option>
+          <option value="klaten">Klaten</option>
+          <option value="boyolali">Boyolali</option>
+          <option value="surakarta">Surakarta</option>
+          <option value="sragen">Sragen</option>
+          <option value="grobogan">Grobogan</option>
+          <option value="semarang">Semarang</option>
+          <option value="kota semarang">Kota Semarang</option>
+          <option value="demak">Demak</option>
+          <option value="kudus">Kudus</option>
+          <option value="pati">Pati</option>
+          <option value="blora">Blora</option>
+          <option value="rembang">Rembang</option>
+          <option value="jepara">Jepara</option>
+          <option value="magelang">Magelang</option>
+          <option value="kota magelang">Kota Magelang</option>
+          <option value="temanggung">Temanggung</option>
+          <option value="kendal">Kendal</option>
+          <option value="kota salatiga">Kota Salatiga</option>
+          <option value="purworejo">Purworejo</option>
+          <option value="wonosobo">Wonosobo</option>
+          <option value="batang">Batang</option>
+          <option value="banjarnegara">Banjarnegara</option>
+          <option value="pekalongan">Pekalongan</option>
+          <option value="kota pekalongan">Kota Pekalongan</option>
+          <option value="kebumen">Kebumen</option>
+          <option value="cilacap">Cilacap</option>
+          <option value="banyumas">Banyumas</option>
+          <option value="purbalingga">Purbalingga</option>
+          <option value="brebes">Brebes</option>
+          <option value="tegal">Tegal</option>
+          <option value="kota tegal">Kota Tegal</option>
+          <option value="pemalang">Pemalang</option>
           </select>
         </div>
 
@@ -480,7 +480,7 @@
                 alt="Motorcycle Icon"
                 class="img-fluid card-image"
               />
-              <p class="card-text">......km</p>
+              <p id="motorcycle" class="card-text">..... KM</p>
             </div>
           </div>
         </div>
@@ -498,7 +498,7 @@
                 alt="Car Icon"
                 class="img-fluid card-image"
               />
-              <p class="card-text">......km</p>
+              <p id="car" class="card-text">..... KM</p>
             </div>
           </div>
         </div>
@@ -516,7 +516,7 @@
                 alt="Train Icon"
                 class="img-fluid card-image"
               />
-              <p class="card-text">......km</p>
+              <p id="train" class="card-text">..... KM</p>
             </div>
           </div>
         </div>
@@ -526,7 +526,7 @@
     <div class="rute" data-aos="fade-up" data-aos-duration="900">
       <h5>
         Rute :
-        <h6>....</h6>
+        <h6 id="route_path">....</h6>
       </h5>
     </div>
 
@@ -558,5 +558,32 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      const process = async (event) => {
+        event.preventDefault();
+    
+        // Get the values from the form elements
+        const startCity = document.getElementById('startCity').value;
+        const finishCity = document.getElementById('finishCity').value;
+    
+        const res = await fetch('/api/process', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                start: startCity,
+                finish: finishCity,
+            }),
+        });
+        const data = await res.json();
+        document.getElementById('motorcycle').innerText = `${data.shortest_path_length} KM`
+        document.getElementById('car').innerText = `${data.shortest_path_length_car} KM`
+        document.getElementById('train').innerText = `${data.shortest_path_length_train} KM`
+        document.getElementById('route_path').innerText = `${data.route_path}`
+        console.log(data);
+    };
+    </script>
   </body>
 </html>

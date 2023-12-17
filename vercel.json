@@ -1,13 +1,5 @@
 {
-    "functions": {
-      "api/process": {
-        "runtime": "python3.8",
-        "handler": "main.routes",
-        "includeFiles": ["*.py"]
-      }
-    },
-    "static": {
-      "directory": "static"
-    }
-  }
-  
+    "rewrites": [
+        { "source": "/(.*)", "destination": "/api/index" }
+    ]
+}

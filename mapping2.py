@@ -1,10 +1,9 @@
 from flask import Flask
 import matplotlib.pyplot as plt
 import networkx as nx
-import numpy as np
 
 def process(start, finish):
-    G = nx.Graph()
+    Gmotor = nx.Graph()
     Gcar = nx.Graph()
     Gtrain = nx.Graph()
 
@@ -14,7 +13,7 @@ def process(start, finish):
         "magelang", "kota magelang", "temanggung", "kendal", "batang", "wonosobo", "purworejo", "kebumen", "banjarnegara", 
         "pekalongan", "kota pekalongan", "pemalang", "purbalingga", "banyumas", "tegal", "kota tegal", "brebes", "cilacap", "yogyakarta"
     ]
-    G.add_nodes_from(nodes)
+    Gmotor.add_nodes_from(nodes)
     Gcar.add_nodes_from(nodes)
 
     pos={
@@ -207,13 +206,13 @@ def process(start, finish):
     ("cilacap", "banyumas", 45),
     ]
 
-    G.add_weighted_edges_from(edges_with_weights)
-    edge_labels = {(u, v): G[u][v]['weight'] for u, v in G.edges()}
-    nx.draw(G, pos=pos,with_labels=True,
+    Gmotor.add_weighted_edges_from(edges_with_weights)
+    edge_labels = {(u, v): Gmotor[u][v]['weight'] for u, v in Gmotor.edges()}
+    nx.draw(Gmotor, pos=pos,with_labels=True,
             node_color="red", node_size=3000,
             font_color="white", font_size=10, font_family="Times New Roman", font_weight="bold",
             width=5)
-    nx.draw_networkx_edge_labels(G, pos=pos,edge_labels=edge_labels)
+    # nx.draw_networkx_edge_labels(Gmotor, pos=pos,edge_labels=edge_labels)
     # plt.show()
 
     #graph mobil
@@ -398,28 +397,58 @@ def process(start, finish):
     # plt.show()
 
 
-    # start = "batang" #start
-    # finish = "kota pekalongan" #finish
+    # start = "klaten" #start
+    # finish = "boyolali" #finish
 
-    shortest_path_length = nx.shortest_path_length(G, source=start, target=finish, weight="weight")
-    shortest_path_length_car= nx.shortest_path_length(Gcar, source=start, target=finish, weight="weight")
-    shortest_path_length_train = nx.shortest_path_length(Gtrain, source=start, target=finish, weight="weight")
+    shortest_path_length = nx.shortest_path_length(Gmotor, source=start, target=finish, weight="weight")
+    shortest_path_length_car = nx.shortest_path_length(Gcar, source=start, target=finish, weight="weight")
+    try:
+        shortest_path_length_train = nx.shortest_path_length(Gtrain, source=start, target=finish, weight="weight")
+        lengthArr = [shortest_path_length, shortest_path_length_car, shortest_path_length_train]
+        min_length = min(lengthArr)
+        routePath = []
+        if min_length == shortest_path_length_train:
+            print("rekomendasi kendaraan : kereta")
+            routePath = nx.shortest_path(Gtrain, source=start, target=finish, weight="weight")
+            print("total cost : ", shortest_path_length_train)
+        
+        elif min_length == shortest_path_length:
+            print("rekomendasi kendaraan : motor")
+            routePath = nx.shortest_path(Gmotor, source=start, target=finish, weight="weight")
+            print("total cost : ", shortest_path_length)
 
-    lengthArr = [shortest_path_length, shortest_path_length_car, shortest_path_length_train ]
+        elif min_length == shortest_path_length_car:
+            print("rekomendasi kendaraan : mobil")
+            routePath = nx.shortest_path(Gcar, source=start, target=finish, weight="weight")
+            print("total cost : ", shortest_path_length_car)
+        result_string_path = " -> ".join(str(num) for num in routePath)
+        return shortest_path_length, shortest_path_length_car, shortest_path_length_train, result_string_path
 
-    print("total cost motor: ", shortest_path_length) #total biaya motor
-    print("total cost mobil: ", shortest_path_length_car) #total biaya mobil
-    print("total cost kereta: ", shortest_path_length_train) #total biaya kereta
-
-    min_length = min(lengthArr)
-    if min_length == shortest_path_length_train:
-        print("rekomendasi kendaraan : kereta")
-        print("total cost : ", shortest_path_length_train)
-    elif min_length == shortest_path_length:
-        print("rekomendasi kendaraan : motor")
-        print("total cost : ", shortest_path_length)
-    elif min_length == shortest_path_length_car:
-        print("rekomendasi kendaraan : mobil")
-        print("total cost : ", shortest_path_length_car)
-
-    return shortest_path_length, shortest_path_length_car, shortest_path_length_train
+    except nx.NetworkXNoPath:
+        lengthArr = [shortest_path_length, shortest_path_length_car]
+        min_length = min(lengthArr)
+        routePath = []
+        if min_length == shortest_path_length:
+            print("rekomendasi kendaraan : motor")
+            routePath = nx.shortest_path(Gmotor, source=start, target=finish, weight="weight")
+            print("total cost : ", shortest_path_length)
+        elif min_length == shortest_path_length_car:
+            print("rekomendasi kendaraan : mobil")
+            routePath = nx.shortest_path(Gcar, source=start, target=finish, weight="weight")
+            print("total cost : ", shortest_path_length_car)
+        result_string_path = " -> ".join(str(num) for num in routePath)
+        return shortest_path_length, shortest_path_length_car, "-", result_string_path
+    except nx.NodeNotFound:
+        lengthArr = [shortest_path_length, shortest_path_length_car]
+        min_length = min(lengthArr)
+        routePath = []
+        if min_length == shortest_path_length:
+            print("rekomendasi kendaraan : motor")
+            routePath = nx.shortest_path(Gmotor, source=start, target=finish, weight="weight")
+            print("total cost : ", shortest_path_length)
+        elif min_length == shortest_path_length_car:
+            print("rekomendasi kendaraan : mobil")
+            routePath = nx.shortest_path(Gcar, source=start, target=finish, weight="weight")
+            print("total cost : ", shortest_path_length_car)
+        result_string_path = " -> ".join(str(num) for num in routePath)
+        return shortest_path_length, shortest_path_length_car, "-", result_string_path
