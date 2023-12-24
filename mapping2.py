@@ -1,12 +1,17 @@
-from flask import Flask
+
+#menggunakan library matplotlib.pyplot untuk menampilkan graf 
 import matplotlib.pyplot as plt
+#menggunakan library matplotlib.pyplot untuk menampilkan graf 
 import networkx as nx
 
+#fungsi process meminta user untuk memasukkan start dan finish yang berupa nama daerah
 def process(start, finish):
+    #mendefinisikan graf motor, mobil, dan kereta
     Gmotor = nx.Graph()
     Gcar = nx.Graph()
     Gtrain = nx.Graph()
 
+    #menginisialisasi vertex/nodes yang nanti dibuat graph
     nodes = [
         "wonogiri", "klaten", "sukoharjo", "karanganyar", "surakarta", "sragen", "grobogan", "blora", 
         "rembang", "pati", "jepara", "kudus", "demak", "boyolali", "semarang", "kota salatiga", "kota semarang", 
@@ -16,6 +21,7 @@ def process(start, finish):
     Gmotor.add_nodes_from(nodes)
     Gcar.add_nodes_from(nodes)
 
+    #menetapkan lokasi vertex bedasarkan canvas yang ditampilkan dengan plt.show()
     pos={
         "wonogiri": (5, -5),
         "klaten": (2.9, -4.862),
@@ -56,7 +62,7 @@ def process(start, finish):
     }
 
 
-    # graph motor
+    # membuat graph motor
     edges_with_weights = [
     ("wonogiri", "sukoharjo", 40),
     ("wonogiri", "karanganyar", 26),
@@ -206,16 +212,20 @@ def process(start, finish):
     ("cilacap", "banyumas", 45),
     ]
 
+    #menambahkan weight untuk graf
     Gmotor.add_weighted_edges_from(edges_with_weights)
+    #meneambahkan edge
     edge_labels = {(u, v): Gmotor[u][v]['weight'] for u, v in Gmotor.edges()}
+    #menggambar graf
     nx.draw(Gmotor, pos=pos,with_labels=True,
             node_color="red", node_size=3000,
             font_color="white", font_size=10, font_family="Times New Roman", font_weight="bold",
             width=5)
-    # nx.draw_networkx_edge_labels(Gmotor, pos=pos,edge_labels=edge_labels)
-    # plt.show()
+    # nx.draw_networkx_edge_labels(Gmotor, pos=pos,edge_labels=edge_labels) ----------------- baris ini untuk menggambar graf motor dengan edge berlabel weight
+    # plt.show() ---------------- baris ini untuk menampilkan graf yang digunakan yang nantinya ditampilkan di frontend
 
-    #graph mobil
+     
+    #membuat graph mobil
     edges_with_weights_car = [
         ("wonogiri", "sukoharjo", 40),
         ("wonogiri", "karanganyar", 26),
@@ -352,18 +362,22 @@ def process(start, finish):
         ("cilacap", "banyumas", 45)
     ]
 
+    #menambahkan weight ke graph mobil
     Gcar.add_weighted_edges_from(edges_with_weights_car)
+    #menambahkan edge ke graph mobil
     edge_labels_car = {(u, v): Gcar[u][v]['weight'] for u, v in Gcar.edges()}
 
+    #menggambar graf mobil
     nx.draw(Gcar, pos=pos,with_labels=True,
             node_color="red", node_size=3000,
             font_color="white", font_size=10, font_family="Times New Roman", font_weight="bold",
             width=5)
+    #menggambar edge pada graph dengan label berupa 
     nx.draw_networkx_edge_labels(Gcar, pos=pos,edge_labels=edge_labels_car)
-    # plt.title("Graph Mobil")
-    # plt.show()
 
-    #graph kereta
+    # plt.show() menampilkan graf yang terbentuk
+
+    #membuat graph kereta
     edges_with_weights_train = [ #data dari arcgis.com
         ("wonogiri", "sukoharjo", 18),
         ("sukoharjo", "surakarta", 19),
@@ -384,29 +398,36 @@ def process(start, finish):
         ("kebumen", "purworejo", 41),
         ("kota pekalongan", "pemalang", 32),
     ]
-        
-    Gtrain.add_weighted_edges_from(edges_with_weights_train)
-    edge_label_train = {(u, v): Gtrain[u][v]['weight'] for u, v in Gtrain.edges()}
 
+    #menambahkan weight ke graph kereta        
+    Gtrain.add_weighted_edges_from(edges_with_weights_train)
+    #menambahkan edge ke graph mobil
+    edge_label_train = {(u, v): Gtrain[u][v]['weight'] for u, v in Gtrain.edges()}
+    #menggambar edge pada graph dengan label berupa
     nx.draw(Gtrain, pos=pos,with_labels=True,
             node_color="red", node_size=3000,
             font_color="white", font_size=10, font_family="Times New Roman", font_weight="bold",
             width=5)
     nx.draw_networkx_edge_labels(Gtrain, pos=pos,edge_labels=edge_label_train)
-    # plt.title("Graph Kereta")
-    # plt.show()
 
 
     # start = "klaten" #start
     # finish = "boyolali" #finish
 
-    shortest_path_length = nx.shortest_path_length(Gmotor, source=start, target=finish, weight="weight")
-    shortest_path_length_car = nx.shortest_path_length(Gcar, source=start, target=finish, weight="weight")
+
+    shortest_path_length = nx.shortest_path_length(Gmotor, source=start, target=finish, weight="weight") #nilai jalur terpendek yang ditempuh untuk graf motor
+    shortest_path_length_car = nx.shortest_path_length(Gcar, source=start, target=finish, weight="weight") #nilai jalur terpendek yang ditempuh untuk graf mobil
+
+    #pada try akan menghitung jarak jarak terpendek yang ditempuh, jika ada graf kereta
+    #jika tidak ada graf kereta, maka akan masuk ke "except" yang hanya menghitung jarak terpendek dari graf mobil dan motor
+
     try:
-        shortest_path_length_train = nx.shortest_path_length(Gtrain, source=start, target=finish, weight="weight")
-        lengthArr = [shortest_path_length, shortest_path_length_car, shortest_path_length_train]
-        min_length = min(lengthArr)
-        routePath = []
+        shortest_path_length_train = nx.shortest_path_length(Gtrain, source=start, target=finish, weight="weight") #menghiung jarak terpendek kereta
+        lengthArr = [shortest_path_length, shortest_path_length_car, shortest_path_length_train] #memasukkan semua nilai terpendek dari semua graf
+        min_length = min(lengthArr) #mencari nilai minimum dari ketiga jalur yang sudah ditemukan
+        routePath = [] #variabel yang nantinya berisi jalur terpendek
+
+        #percabangan dibawah ini akan membandingkan jarak mana yang lebih pendek diantara mobil, motor, dan kereta
         if min_length == shortest_path_length_train:
             print("rekomendasi kendaraan : kereta")
             routePath = nx.shortest_path(Gtrain, source=start, target=finish, weight="weight")
@@ -424,6 +445,7 @@ def process(start, finish):
         result_string_path = " -> ".join(str(num) for num in routePath)
         return shortest_path_length, shortest_path_length_car, shortest_path_length_train, result_string_path
 
+    # pada blok except memiliki cara kerja yang sama, tetapi hanya membandingkan antara motor dan mobil
     except nx.NetworkXNoPath:
         lengthArr = [shortest_path_length, shortest_path_length_car]
         min_length = min(lengthArr)
