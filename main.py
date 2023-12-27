@@ -23,7 +23,7 @@ def menu():
 def about():
     return render_template('about.html')
 
-# proses pharsing data dari fe ke be 
+# proses pharsing data dari frontend ke backend 
 from mapping2 import process
 @app.route('/api/process',methods=['POST'])
 def routes():
